@@ -52,9 +52,9 @@ const Landing = () => {
           </div>
           <p>
            Being a rental property owner is about more than just owning homes, it’s about shaping neighborhoods and supporting the people who live in them.
-
+        </p><p>
             This app promotes a mindful approach to investing, encouraging landlords to provide clean, safe, and well-maintained housing. It’s a call to care and treat tenants with dignity and to invest in communities and families with intention.
-
+</p><p>
             Together, we can set a higher standard for what responsible property ownership looks like.
           </p>
         </CardContent>
