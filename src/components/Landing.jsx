@@ -7,7 +7,7 @@ const Landing = () => {
   return (
     <div className="space-y-10 text-[#CBD5E1]">
       <div className="text-center">
-        <h1 className="text-4xl font-bold mb-2 tracking-tight text-white">RE Cash Flow Monitor</h1>
+        <h1 className="text-3xl font-bold text-white">RE Cash Flow Monitor</h1>
         <p className="text-lg text-[#94A3B8] max-w-xl mx-auto">
           Track, analyze, and compare real estate cash flow performance across cities to make smart, ethical investments.
         </p>

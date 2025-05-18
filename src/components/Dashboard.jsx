@@ -98,7 +98,7 @@ const Dashboard = ({ user }) => {
   return (
     <div className="space-y-10">
       <div className="text-center">
-        <h2 className="text-2xl font-semibold text-white">📈 Monitor & Evaluate</h2>
+        <h1 className="text-3xl font-bold text-white">📈 Monitor & Evaluate</h1>
         <p className="text-[#94A3B8] max-w-xl mx-auto">
           Input your financial details, evaluate cash flow and ROI, and compare property performance across cities.
         </p>
