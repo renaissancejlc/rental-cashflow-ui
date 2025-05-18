@@ -48,24 +48,28 @@ const PoweredBy = () => {
         </p>
       </Card>
 
-      <Card title="Backend" icon={<BrainCircuit className="w-5 h-5 text-blue-500" />}>
-        <p>
-          <Icon src="https://raw.githubusercontent.com/aws/aws-icons/main/PNG%20Individual%20Icons/Compute/AWS-Lambda_light-bg.png" alt="Lambda" />
-          <strong>AWS Lambda:</strong> Stateless serverless functions power calculations, saves, fetches, and updates for each scenario.
-        </p>
-        <p>
-          <Icon src="https://raw.githubusercontent.com/aws/aws-icons/main/PNG%20Individual%20Icons/Database/Amazon-DynamoDB_light-bg.png" alt="DynamoDB" />
-          <strong>Amazon DynamoDB:</strong> A lightning-fast NoSQL store for user-specific data with partition + sort key schema.
-        </p>
-        <p>
-          <Icon src="https://raw.githubusercontent.com/aws/aws-icons/main/PNG%20Individual%20Icons/Application-Integration/Amazon-API-Gateway_light-bg.png" alt="API Gateway" />
-          <strong>API Gateway:</strong> Authenticated endpoints serve as the interface between frontend requests and backend logic.
-        </p>
-        <p>
-          <Icon src="https://raw.githubusercontent.com/aws/aws-icons/main/PNG%20Individual%20Icons/Security-Identity-Compliance/Amazon-Cognito_light-bg.png" alt="Cognito" />
-          <strong>AWS Cognito:</strong> Identity provider issuing JWT tokens for per-user scoping and secure interaction.
-        </p>
-      </Card>
+<Card title="Backend" icon={<BrainCircuit className="w-5 h-5 text-blue-500" />}>
+  <p>
+    <Icon src="https://raw.githubusercontent.com/aws/aws-icons/main/PNG%20Individual%20Icons/Compute/AWS-Lambda_light-bg.png" alt="Lambda" />
+    <strong>AWS Lambda:</strong> Stateless serverless functions power calculations, saves, fetches, and updates for each scenario.
+  </p>
+  <p>
+    <Icon src="https://raw.githubusercontent.com/aws/aws-icons/main/PNG%20Individual%20Icons/Database/Amazon-DynamoDB_light-bg.png" alt="DynamoDB" />
+    <strong>Amazon DynamoDB:</strong> A lightning-fast NoSQL store for user-specific data with partition + sort key schema.
+  </p>
+  <p>
+    <Icon src="https://raw.githubusercontent.com/aws/aws-icons/main/PNG%20Individual%20Icons/Application-Integration/Amazon-API-Gateway_light-bg.png" alt="API Gateway" />
+    <strong>API Gateway:</strong> Acts as a secure gateway for frontend requests, validating JWT tokens and routing to the right Lambda.
+  </p>
+  <p>
+    <Icon src="https://raw.githubusercontent.com/aws/aws-icons/main/PNG%20Individual%20Icons/Security-Identity-Compliance/Amazon-Cognito_light-bg.png" alt="Cognito" />
+    <strong>AWS Cognito:</strong> Identity provider issuing JWT tokens for secure, user-scoped access to backend services.
+  </p>
+  <p>
+    <Icon src="https://raw.githubusercontent.com/aws/aws-icons/main/PNG%20Individual%20Icons/Security-Identity-Compliance/AWS-Identity-Access-Management-IAM_light-bg.png" alt="IAM" />
+    <strong>AWS IAM:</strong> Grants precise, least-privilege access for each Lambda, ensuring functions only touch what they’re supposed to.
+  </p>
+</Card>
 
       <Card title="Hosting & Security" icon={<ShieldCheck className="w-5 h-5 text-blue-500" />}>
         <p>

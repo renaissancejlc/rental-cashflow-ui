@@ -51,10 +51,11 @@ const Landing = () => {
             Mission & Responsibility
           </div>
           <p>
-            Real estate isn’t just numbers — it’s about impact. This app encourages responsible investing to provide quality housing while remaining profitable.
-          </p>
-          <p>
-            We advocate for clean, safe, and well-maintained homes — especially for families in poverty and Section 8 renters. Let’s build a better standard for landlords everywhere.
+           Being a rental property owner is about more than just owning homes, it’s about shaping neighborhoods and supporting the people who live in them.
+
+            This app promotes a mindful approach to investing, encouraging landlords to provide clean, safe, and well-maintained housing. It’s a call to care and treat tenants with dignity and to invest in communities and families with intention.
+
+            Together, we can set a higher standard for what responsible property ownership looks like.
           </p>
         </CardContent>
       </Card>
