@@ -51,47 +51,11 @@ const MonitoringInputs = ({ form, setForm }) => {
       </div>
 
       <div>
-        <label className="block text-sm text-[#94A3B8] mb-1">Asking Price</label>
-        <input
-          type="number"
-          step="any"
-          name="purchase_price"
-          value={form.purchase_price}
-          onChange={handleChange}
-          className="w-full p-2 bg-[#1C1F26] border border-[#2D2F36] rounded-lg text-white"
-        />
-      </div>
-
-      <div>
         <label className="block text-sm text-[#94A3B8] mb-1">Zip Code</label>
         <input
           type="text"
           name="zip_code"
           value={form.zip_code || '92071'}
-          onChange={handleChange}
-          className="w-full p-2 bg-[#1C1F26] border border-[#2D2F36] rounded-lg text-white"
-        />
-      </div>
-
-      <div>
-        <label className="block text-sm text-[#94A3B8] mb-1">Monthly Projected Rent</label>
-        <input
-          type="number"
-          step="any"
-          name="monthly_rent"
-          value={form.monthly_rent}
-          onChange={handleChange}
-          className="w-full p-2 bg-[#1C1F26] border border-[#2D2F36] rounded-lg text-white"
-        />
-      </div>
-
-      <div>
-        <label className="block text-sm text-[#94A3B8] mb-1">Annual Property Tax (%)</label>
-        <input
-          type="number"
-          step="0.01"
-          name="property_tax"
-          value={form.property_tax}
           onChange={handleChange}
           className="w-full p-2 bg-[#1C1F26] border border-[#2D2F36] rounded-lg text-white"
         />
@@ -188,6 +152,18 @@ const MonitoringInputs = ({ form, setForm }) => {
           <option value="no">No</option>
           <option value="yes">Yes</option>
         </select>
+      </div>
+
+      <div className="md:col-span-2">
+        <label className="block text-sm text-[#94A3B8] mb-1">Notes</label>
+        <textarea
+          name="notes"
+          value={form.notes || ''}
+          onChange={handleChange}
+          rows={3}
+          className="w-full p-2 bg-[#1C1F26] border border-[#2D2F36] rounded-lg text-white"
+          placeholder="Additional observations or reminders about this property..."
+        />
       </div>
     </div>
   );

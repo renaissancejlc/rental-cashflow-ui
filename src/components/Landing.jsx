@@ -1,57 +1,78 @@
 // src/components/Landing.jsx
 import React from 'react';
+import { Card, CardContent } from './ui/card';
+import { TrendingUp, Settings, ShieldCheck, Rocket } from 'lucide-react';
 
 const Landing = () => {
   return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold text-center">Real Estate Monitoring</h1>
-      <p className="text-center text-[#94A3B8] text-lg">
-        This utility helps you track and compare rental property scenarios in different cities, giving you the data you need to time your next investment.
-      </p>
-
-      <section className="mt-6 space-y-4">
-        <h2 className="text-2xl font-semibold">📊 What It Does</h2>
-        <ul className="list-disc list-inside text-[#CBD5E1]">
-          <li>Calculate rental property cash flow based on your input (purchase price, rent, expenses, etc).</li>
-          <li>Save and compare results by location to detect patterns over time.</li>
-          <li>Track ROI, break-even time, and net monthly income.</li>
-        </ul>
-      </section>
-
-      <section className="space-y-4">
-        <h2 className="text-2xl font-semibold">🛠️ How to Use</h2>
-        <ol className="list-decimal list-inside text-[#CBD5E1]">
-          <li>Go to the “Monitor” tab above.</li>
-          <li>Fill in property and financial info to calculate performance.</li>
-          <li>Save scenarios for different zip codes to compare later.</li>
-          <li>Switch locations to view your full history and trends.</li>
-        </ol>
-      </section>
-
-      <section className="space-y-4">
-        <h2 className="text-2xl font-semibold">🌱 Mission & Responsibility</h2>
-        <p className="text-[#CBD5E1]">
-          Being a rental property investor is not just about generating profit — it’s also about creating real impact.
+    <div className="space-y-10 text-[#CBD5E1]">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold mb-2 tracking-tight text-white">RE Cash Flow Monitor</h1>
+        <p className="text-lg text-[#94A3B8] max-w-xl mx-auto">
+          Track, analyze, and compare real estate cash flow performance across cities to make smart, ethical investments.
         </p>
-        <p className="text-[#CBD5E1]">
-          This app encourages responsible investing that supports communities, not exploits them. The goal is to provide clean, safe, and well-maintained homes to families in need — particularly those relying on programs like Section 8.
-        </p>
-        <p className="text-[#CBD5E1]">
-          With smart planning, it’s entirely possible to be both profitable <span className="italic">and</span> ethical. Let’s raise the standard for what it means to be a landlord.
-        </p>
-      </section>
+      </div>
 
-      <section className="space-y-4">
-        <h2 className="text-2xl font-semibold">🚀 Next Features (Coming Soon)</h2>
-        <ul className="list-disc list-inside text-[#CBD5E1]">
-            <li>
-  Chrome extension that detects Zillow listings and extracts data like price, rent, and zip code to sync or copy into the app
-</li>
-          <li>Graph-based trend visualization per city</li>
-          <li>Zip code heatmaps based on your ROI</li>
-          <li>Market alerts when average cash flow spikes or dips</li>
-        </ul>
-      </section>
+      <div className="grid md:grid-cols-2 gap-6">
+        <Card className="bg-[#1C1F26] border border-[#2D2F36]">
+          <CardContent className="p-6 space-y-4">
+            <div className="flex items-center gap-2 text-xl font-semibold">
+              <TrendingUp className="w-5 h-5 text-blue-500" />
+              What It Does
+            </div>
+            <ul className="list-disc list-inside space-y-1">
+              <li>Calculate cash flow based on inputs like rent, purchase price, and expenses.</li>
+              <li>Save and compare scenarios by location to uncover trends over time.</li>
+              <li>Track ROI, break-even time, and net monthly income effortlessly.</li>
+            </ul>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-[#1C1F26] border border-[#2D2F36]">
+          <CardContent className="p-6 space-y-4">
+            <div className="flex items-center gap-2 text-xl font-semibold">
+              <Settings className="w-5 h-5 text-blue-500" />
+              How to Use
+            </div>
+            <ol className="list-decimal list-inside space-y-1">
+              <li>Navigate to the “Monitor” tab.</li>
+              <li>Enter financial info to calculate performance.</li>
+              <li>Save results for different zip codes and compare.</li>
+              <li>Switch cities to view trends in your saved data.</li>
+            </ol>
+          </CardContent>
+        </Card>
+      </div>
+
+      <Card className="bg-[#1C1F26] border border-[#2D2F36]">
+        <CardContent className="p-6 space-y-4">
+          <div className="flex items-center gap-2 text-xl font-semibold">
+            <ShieldCheck className="w-5 h-5 text-blue-500" />
+            Mission & Responsibility
+          </div>
+          <p>
+            Real estate isn’t just numbers — it’s about impact. This app encourages responsible investing to provide quality housing while remaining profitable.
+          </p>
+          <p>
+            We advocate for clean, safe, and well-maintained homes — especially for families in poverty and Section 8 renters. Let’s build a better standard for landlords everywhere.
+          </p>
+        </CardContent>
+      </Card>
+
+      <Card className="bg-[#1C1F26] border border-[#2D2F36]">
+        <CardContent className="p-6 space-y-4">
+          <div className="flex items-center gap-2 text-xl font-semibold">
+            <Rocket className="w-5 h-5 text-blue-500" />
+            Upcoming Features
+          </div>
+          <ul className="list-disc list-inside space-y-1">
+            <li>Chrome extension to auto-scrape Zillow listings</li>
+            <li>Graphs visualizing performance trends by city</li>
+            <li>Heatmaps to highlight strong ROI zip codes</li>
+            <li>Smart alerts for market shifts in your targets</li>
+          </ul>
+        </CardContent>
+      </Card>
     </div>
   );
 };

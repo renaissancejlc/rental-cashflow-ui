@@ -5,6 +5,7 @@ import { Trash2 } from 'lucide-react';
 
 const ScenarioTable = ({ scenarios, location, setLocation, setScenarios }) => {
   const [activeScenario, setActiveScenario] = useState(null);
+  const [editingScenario, setEditingScenario] = useState(null);
 
   const handleDelete = async (fullId) => {
     try {
@@ -33,10 +34,58 @@ const ScenarioTable = ({ scenarios, location, setLocation, setScenarios }) => {
     }
   };
 
-  const renderRow = (label, value) => (
+  const handleChange = (field, value) => {
+    setEditingScenario((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleSave = async () => {
+    try {
+      const user = await Auth.currentAuthenticatedUser();
+      const token = user.signInUserSession.idToken.jwtToken;
+
+      const { fullId, notes, contacted, asking_price, zip_code, rehab_rating, crime_rating, population_growth, zillow_link, ...inputs } = editingScenario;
+
+      const res = await fetch(
+        `https://u0hewg9v3a.execute-api.us-east-2.amazonaws.com/updateScenario?scenarioId=${fullId}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: token
+          },
+          body: JSON.stringify({
+            inputs,
+            notes,
+            contacted,
+            asking_price,
+            zip_code,
+            rehab_rating,
+            crime_rating,
+            population_growth,
+            zillow_link
+          })
+        }
+      );
+
+      if (!res.ok) throw new Error('Failed to update');
+
+      alert('✅ Scenario updated successfully.');
+      setActiveScenario(null);
+    } catch (err) {
+      console.error('Update failed:', err);
+      alert('❌ Failed to update scenario.');
+    }
+  };
+
+  const renderInputRow = (label, field, type = 'text') => (
     <div className="flex justify-between text-sm py-1 border-b border-[#2D2F36]">
       <span className="text-[#94A3B8]">{label}</span>
-      <span className="text-right max-w-[50%] truncate">{value || '—'}</span>
+      <input
+        type={type}
+        value={editingScenario?.[field] ?? ''}
+        onChange={(e) => handleChange(field, e.target.value)}
+        className="bg-[#1C1F26] text-white border border-[#2D2F36] rounded px-2 py-1 text-right w-1/2"
+      />
     </div>
   );
 
@@ -70,7 +119,10 @@ const ScenarioTable = ({ scenarios, location, setLocation, setScenarios }) => {
             <tr
               key={s.id}
               className="hover:bg-[#1E1E26] cursor-pointer"
-              onClick={() => setActiveScenario(s)}
+              onClick={() => {
+                setActiveScenario(s);
+                setEditingScenario(s);
+              }}
             >
               <td className="p-3 border-b border-[#2D2F36]">{s.id}</td>
               <td className="p-3 border-b border-[#2D2F36]">
@@ -87,7 +139,6 @@ const ScenarioTable = ({ scenarios, location, setLocation, setScenarios }) => {
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    console.log('🧨 Deleting scenario:', s.fullId);
                     handleDelete(s.fullId);
                   }}
                   className="text-red-400 hover:text-red-600"
@@ -112,21 +163,28 @@ const ScenarioTable = ({ scenarios, location, setLocation, setScenarios }) => {
             </button>
             <h2 className="text-xl font-semibold mb-4">Scenario Details</h2>
             <div className="space-y-2">
-              {renderRow('Asking Price', `$${activeScenario.asking_price}`)}
-              {renderRow('Down Payment', `$${activeScenario.down_payment}`)}
-              {renderRow('Loan Term (Years)', activeScenario.loan_term_years)}
-              {renderRow('Interest Rate', `${activeScenario.interest_rate}`)}
-              {renderRow('Property Tax', `$${activeScenario.property_tax}`)}
-              {renderRow('Insurance', `$${activeScenario.insurance}`)}
-              {renderRow('Monthly Rent', `$${activeScenario.monthly_rent}`)}
-              {renderRow('HOA', `$${activeScenario.hoa}`)}
-              {renderRow('Vacancy Rate', `${(parseFloat(activeScenario.vacancy_rate || 0) * 100).toFixed(1)}%`)}
-              {renderRow('Repairs', `$${activeScenario.repairs}`)}
-              {renderRow('Rehab Rating', activeScenario.rehab_rating)}
-              {renderRow('Crime Rating', activeScenario.crime_rating)}
-              {renderRow('Population Growth', `${activeScenario.population_growth}%`)}
-              {renderRow('Contacted', activeScenario.contacted)}
-              {renderRow('Notes', activeScenario.notes)}
+              {renderInputRow('Purchase Price', 'purchase_price', 'number')}
+              {renderInputRow('Down Payment', 'down_payment', 'number')}
+              {renderInputRow('Loan Term (Years)', 'loan_term_years', 'number')}
+              {renderInputRow('Interest Rate', 'interest_rate', 'number')}
+              {renderInputRow('Property Tax', 'property_tax', 'number')}
+              {renderInputRow('Insurance', 'insurance', 'number')}
+              {renderInputRow('Monthly Rent', 'monthly_rent', 'number')}
+              {renderInputRow('HOA', 'hoa', 'number')}
+              {renderInputRow('Vacancy Rate', 'vacancy_rate', 'number')}
+              {renderInputRow('Repairs', 'repairs', 'number')}
+              {renderInputRow('Asking Price', 'asking_price', 'number')}
+              {renderInputRow('Rehab Rating', 'rehab_rating')}
+              {renderInputRow('Crime Rating', 'crime_rating')}
+              {renderInputRow('Population Growth', 'population_growth', 'number')}
+              {renderInputRow('Contacted', 'contacted')}
+              {renderInputRow('Notes', 'notes')}
+              <button
+                onClick={handleSave}
+                className="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg"
+              >
+                Save Changes
+              </button>
             </div>
           </div>
         </div>
