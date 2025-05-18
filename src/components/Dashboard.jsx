@@ -30,49 +30,74 @@ const Dashboard = ({ user }) => {
   const [scenarios, setScenarios] = useState([]);
   const [location, setLocation] = useState('san_diego');
 
-  const fetchScenarios = async () => {
-    try {
-      const user = await Auth.currentAuthenticatedUser();
-      const token = user.signInUserSession.idToken.jwtToken;
+const fetchScenarios = async () => {
+  try {
+    const user = await Auth.currentAuthenticatedUser();
+    const token = user.signInUserSession.idToken.jwtToken;
 
-      const res = await fetch(
-        `https://u0hewg9v3a.execute-api.us-east-2.amazonaws.com/scenarios?location=${location}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: token,
-          },
-        }
-      );
+    const res = await fetch(
+      `https://u0hewg9v3a.execute-api.us-east-2.amazonaws.com/scenarios?location=${location}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
+      }
+    );
 
-      const items = await res.json();
-      console.log('📦 Raw scenario items:', items);
+    const items = await res.json();
+    console.log('📦 Raw scenario items:', items);
 
-      const cleaned = items.map((item) => {
-        const scenarioId = item.scenarioId;
+        const cleaned = items.map((item) => {
+  const scenarioId = item.scenarioId;
+  const inputs = item.inputs || {};
+  const outputs = item.outputs || {};
 
-        return {
-          id: scenarioId?.slice(0, 8),
-          fullId: scenarioId, // used for delete
-          cashFlow: parseFloat(item.monthly_cash_flow ?? item.outputs?.monthly_cash_flow),
-          roi: parseFloat(item.roi ?? item.outputs?.roi) * 100,
-          breakEven: item.outputs?.break_even_months
-            ? parseFloat(item.outputs.break_even_months) / 12
-            : null,
-          dateAdded: item.timestamp
-            ? new Date(item.timestamp).toLocaleDateString()
-            : '—',
-        };
-      });
+  return {
+    // Display
+    id: scenarioId?.slice(0, 8),
+    fullId: scenarioId,
+    dateAdded: item.timestamp
+      ? new Date(item.timestamp).toLocaleDateString()
+      : '—',
 
-      console.log('✅ Cleaned scenarios:', cleaned);
-      setScenarios(cleaned);
-    } catch (err) {
-      console.error('❌ Error loading scenarios:', err);
-      setScenarios([]);
-    }
+    // Financial metrics
+    cashFlow: parseFloat(outputs.monthly_cash_flow ?? item.monthly_cash_flow),
+    roi: parseFloat(outputs.roi ?? item.roi) * 100,
+    breakEven: outputs.break_even_months
+          ? parseFloat(outputs.break_even_months) / 12
+          : null,
+
+    // Required Inputs (core)
+    purchase_price: parseFloat(inputs.purchase_price ?? item.purchase_price),
+    down_payment: parseFloat(inputs.down_payment ?? item.down_payment),
+    loan_term_years: parseInt(inputs.loan_term_years ?? item.loan_term_years),
+    interest_rate: parseFloat(inputs.interest_rate ?? item.interest_rate),
+    property_tax: parseFloat(inputs.property_tax ?? item.property_tax),
+    insurance: parseFloat(inputs.insurance ?? item.insurance),
+    monthly_rent: parseFloat(inputs.monthly_rent ?? item.monthly_rent),
+    hoa: parseFloat(inputs.hoa ?? item.hoa),
+    vacancy_rate: parseFloat(inputs.vacancy_rate ?? item.vacancy_rate),
+    repairs: parseFloat(inputs.repairs ?? item.repairs),
+
+    // Monitoring Extras
+    asking_price: parseFloat(item.asking_price),
+    rehab_rating: item.rehab_rating ?? '',
+    crime_rating: item.crime_rating ?? '',
+    population_growth: item.population_growth ?? '',
+    contacted: item.contacted ?? 'no',
+    notes: item.notes ?? ''
   };
+});
+
+    console.log('✅ Cleaned scenarios:', cleaned);
+    setScenarios(cleaned);
+  } catch (err) {
+    console.error('❌ Error loading scenarios:', err);
+    setScenarios([]);
+  }
+};
 
   useEffect(() => {
     fetchScenarios();
