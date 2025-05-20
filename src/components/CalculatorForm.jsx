@@ -1,5 +1,4 @@
 import React from 'react';
-import MonitoringInputs from './MonitoringInputs';
 
 const CalculatorForm = ({ form, setForm, setResult, loading, setLoading }) => {
   const handleChange = (e) => {
@@ -69,8 +68,6 @@ const CalculatorForm = ({ form, setForm, setResult, loading, setLoading }) => {
           </div>
         ))}
       </div>
-
-      <MonitoringInputs form={form} setForm={setForm} />
 
       <div className="col-span-1 md:col-span-2">
         <button

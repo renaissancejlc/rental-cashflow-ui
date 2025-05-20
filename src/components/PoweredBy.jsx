@@ -1,6 +1,13 @@
 // src/components/PoweredBy.jsx
 import React from 'react';
-import { LayoutDashboard, BrainCircuit, ShieldCheck, Blocks, BarChart3, Settings, Server, Globe } from 'lucide-react';
+import {
+  LayoutDashboard,
+  BrainCircuit,
+  ShieldCheck,
+  Blocks,
+  BarChart3,
+  Settings
+} from 'lucide-react';
 
 const Icon = ({ src, alt }) => (
   <img src={src} alt={alt} className="w-5 h-5 inline-block mr-2 align-text-bottom" />
@@ -27,69 +34,65 @@ const PoweredBy = () => {
 
       <Card title="Frontend" icon={<LayoutDashboard className="w-5 h-5 text-blue-500" />}>
         <p>
-          <Icon src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" />
-          <strong>React + Tailwind CSS:</strong> Component-driven UI styled with utility-first Tailwind for responsive layout and theming.
+<Icon src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" />
+          <strong>React (with Tailwind CSS):</strong> A modular, component-driven UI built with Tailwind utility classes for rapid, responsive design.
         </p>
         <p>
-          <Icon src="https://docs.amplify.aws/assets/logo.svg" alt="Amplify" />
-          <strong>AWS Amplify Authenticator:</strong> Handles secure user login via Cognito with clean, customizable UI components.
-        </p>
-        <p>
-          <Settings className="inline-block w-4 h-4 text-blue-400 mr-2" />
-          <strong>shadcn/ui:</strong> Styled component primitives built with Tailwind and Radix for elegant interface interactions.
+          <Icon src="/icons/aws/Asset-Package_02072025.dee42cd0a6eaacc3da1ad9519579357fb546f803 (1)/Architecture-Service-Icons_02072025/Arch_Front-End-Web-Mobile/16/Arch_AWS-Amplify_16.svg" alt="Amplify" />
+          <strong>AWS Amplify Authenticator:</strong> Handles sign-up and login securely using AWS Cognito, abstracted through Amplify's component library.
         </p>
         <p>
           <Blocks className="inline-block w-4 h-4 text-blue-400 mr-2" />
-          <strong>React Context API:</strong> Global state shared across views for seamless user flow without prop drilling.
+          <strong>React Context:</strong> Enables shared state across tabs and components without prop drilling.
         </p>
         <p>
           <BarChart3 className="inline-block w-4 h-4 text-blue-400 mr-2" />
-          <strong>Recharts (planned):</strong> Upcoming dashboards will use this for rich visual insights into cashflow and ROI.
+          <strong>Recharts (planned):</strong> Future analytics dashboards will use React-powered graphs for rental performance visualization.
         </p>
       </Card>
 
       <Card title="Backend" icon={<BrainCircuit className="w-5 h-5 text-blue-500" />}>
         <p>
-          <Icon src="https://raw.githubusercontent.com/aws/aws-icons/main/PNG%20Individual%20Icons/Compute/AWS-Lambda_light-bg.png" alt="Lambda" />
-          <strong>AWS Lambda:</strong> Stateless functions compute, store, and update user data on-demand for high scalability.
+          <Icon src="/icons/aws/Asset-Package_02072025.dee42cd0a6eaacc3da1ad9519579357fb546f803 (1)/Architecture-Service-Icons_02072025/Arch_Compute/16/Arch_AWS-Lambda_16.svg" alt="AWS Lambda" />
+          <strong>AWS Lambda:</strong> Stateless serverless functions power calculations, saves, fetches, and updates for each scenario.
         </p>
         <p>
-          <Icon src="https://raw.githubusercontent.com/aws/aws-icons/main/PNG%20Individual%20Icons/Database/Amazon-DynamoDB_light-bg.png" alt="DynamoDB" />
-          <strong>Amazon DynamoDB:</strong> Fast NoSQL database storing user-specific investment scenarios with partition keys.
+          <Icon src="/icons/aws/Asset-Package_02072025.dee42cd0a6eaacc3da1ad9519579357fb546f803 (1)/Architecture-Service-Icons_02072025/Arch_Database/16/Arch_Amazon-DynamoDB_16.svg" alt="DynamoDB" />
+          <strong>Amazon DynamoDB:</strong> A lightning-fast NoSQL store for user-specific data with partition + sort key schema.
         </p>
         <p>
-          <Icon src="https://raw.githubusercontent.com/aws/aws-icons/main/PNG%20Individual%20Icons/Application-Integration/Amazon-API-Gateway_light-bg.png" alt="API Gateway" />
-          <strong>API Gateway:</strong> Validates tokens and routes frontend requests to Lambda endpoints securely.
+          <Icon src="/icons/aws/Asset-Package_02072025.dee42cd0a6eaacc3da1ad9519579357fb546f803 (1)/Architecture-Service-Icons_02072025/Arch_Networking-Content-Delivery/16/Arch_Amazon-API-Gateway_16.svg" alt="API Gateway" />
+          <strong>API Gateway:</strong> Acts as a secure gateway for frontend requests, validating JWT tokens and routing to the right Lambda.
         </p>
         <p>
-          <Icon src="https://raw.githubusercontent.com/aws/aws-icons/main/PNG%20Individual%20Icons/Security-Identity-Compliance/Amazon-Cognito_light-bg.png" alt="Cognito" />
-          <strong>AWS Cognito:</strong> Manages user authentication and authorization with JWT-based access controls.
+          <Icon src="/icons/aws/Asset-Package_02072025.dee42cd0a6eaacc3da1ad9519579357fb546f803 (1)/Architecture-Service-Icons_02072025/Arch_Security-Identity-Compliance/16/Arch_Amazon-Cognito_16.svg" alt="Cognito" />
+          <strong>AWS Cognito:</strong> Identity provider issuing JWT tokens for secure, user-scoped access to backend services.
         </p>
         <p>
-          <Icon src="https://raw.githubusercontent.com/aws/aws-icons/main/PNG%20Individual%20Icons/Security-Identity-Compliance/AWS-Identity-Access-Management-IAM_light-bg.png" alt="IAM" />
-          <strong>AWS IAM:</strong> Controls exact Lambda permissions with least-privilege roles tied to secure backend access.
+          <Icon src="/icons/aws/Asset-Package_02072025.dee42cd0a6eaacc3da1ad9519579357fb546f803 (1)/Architecture-Service-Icons_02072025/Arch_Security-Identity-Compliance/16/Arch_AWS-IAM-Identity-Center_16.svg" alt="IAM" />
+          <strong>AWS IAM:</strong> Grants precise, least-privilege access for each Lambda, ensuring functions only touch what they’re supposed to.
         </p>
       </Card>
 
-      <Card title="Hosting & Delivery" icon={<ShieldCheck className="w-5 h-5 text-blue-500" />}>
+      <Card title="Hosting & Security" icon={<ShieldCheck className="w-5 h-5 text-blue-500" />}>
         <p>
-          <Icon src="https://raw.githubusercontent.com/aws/aws-icons/main/PNG%20Individual%20Icons/Storage/Amazon-S3_light-bg.png" alt="S3" />
-          <strong>Amazon S3:</strong> Static web hosting for the production build of the React app.
+          <Icon src="/icons/aws/Asset-Package_02072025.dee42cd0a6eaacc3da1ad9519579357fb546f803 (1)/Architecture-Service-Icons_02072025/Arch_Networking-Content-Delivery/16/Arch_Amazon-CloudFront_16.svg" alt="CloudFront" />
+          <strong>Amazon CloudFront:</strong> Global CDN that delivers static assets like HTML, CSS, and JS at low latency.
         </p>
         <p>
-          <Icon src="https://raw.githubusercontent.com/aws/aws-icons/main/PNG%20Individual%20Icons/Networking-Content-Delivery/Amazon-CloudFront_light-bg.png" alt="CloudFront" />
-          <strong>AWS CloudFront:</strong> Global CDN distributing the app securely with fast caching and low-latency delivery.
+          <Icon src="/icons/aws/Asset-Package_02072025.dee42cd0a6eaacc3da1ad9519579357fb546f803 (1)/Architecture-Service-Icons_02072025/Arch_Storage/16/Arch_Amazon-S3-on-Outposts_16.svg" alt="S3" />
+          <strong>Amazon S3:</strong> Stores and serves the React frontend as a static site, accessible via CloudFront.
         </p>
         <p>
-          <strong>CORS:</strong> Configured to safely allow frontend-backend communication across AWS services.
+          <strong>CORS (Cross-Origin Resource Sharing):</strong> Properly configured to allow your React frontend to talk to AWS securely.
         </p>
         <p>
-          <strong>IAM Security:</strong> Enforced at every layer, ensuring only appropriate service-level access between components.
+          <strong>IAM Roles & Policies:</strong> All Lambdas run under least-privilege IAM roles that grant access only to permitted DynamoDB tables.
         </p>
       </Card>
 
       <div className="bg-[#0B0C10] text-[#94A3B8] italic border-l-4 border-blue-600 pl-4 py-4">
-        This app is <strong>100% serverless</strong>. Built on-demand, auto-scaling, and globally distributed using AWS services only.
+        This app is fully serverless. There are no traditional servers to manage. Everything is on-demand, scalable, and personalized per user — all powered by AWS.
       </div>
 
       <div className="text-center text-[#94A3B8] border-t pt-6 mt-6">
@@ -105,8 +108,7 @@ const PoweredBy = () => {
             <img src="https://www.svgrepo.com/show/349426/youtube.svg" alt="YouTube" className="w-5 h-5" /> YouTube
           </a>
           <a href="#" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white">
-            <img src="https://www.svgrepo.com/show/364604/tiktok.svg" alt="TikTok" className="w-5 h-5" /> TikTok
-          </a>
+<img src="https://www.svgrepo.com/show/364604/tiktok.svg" alt="TikTok" className="w-5 h-5" /> TikTok          </a>
           <a href="https://renaissancecarr.com/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white">
             <img src="https://www.svgrepo.com/show/300940/website.svg" alt="Portfolio" className="w-5 h-5" /> Portfolio
           </a>

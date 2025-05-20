@@ -1,7 +1,7 @@
 import React from 'react';
 import { Auth } from 'aws-amplify';
 
-const ResultCard = ({ result, form }) => {
+const ResultCard = ({ result, form, setScenarios }) => {
   const handleSave = async () => {
     try {
       const session = await Auth.currentSession();
@@ -27,7 +27,20 @@ const ResultCard = ({ result, form }) => {
           location: form.location.toLowerCase()
         })
       });
+
       if (response.ok) {
+        const data = await response.json(); // ideally your API returns the saved item
+        const fakeId = Math.random().toString(36).slice(2, 10); // generate temporary ID if needed
+        const newScenario = {
+          id: fakeId,
+          fullId: data.scenarioId || fakeId,
+          dateAdded: new Date().toLocaleDateString(),
+          cashFlow: parseFloat(result.monthly_cash_flow),
+          roi: result.roi * 100,
+          breakEven: result.break_even_months / 12,
+          ...form
+        };
+        setScenarios((prev) => [...prev, newScenario]);
         alert('✅ Scenario saved!');
       } else {
         alert('❌ Save failed.');

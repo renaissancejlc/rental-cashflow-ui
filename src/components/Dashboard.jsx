@@ -1,7 +1,5 @@
-// src/components/Dashboard.jsx
 import React, { useEffect, useState } from 'react';
 import { Auth } from 'aws-amplify';
-import CalculatorForm from './CalculatorForm';
 import ResultCard from './ResultCard';
 import ScenarioTable from './ScenarioTable';
 
@@ -11,7 +9,7 @@ const Dashboard = ({ user }) => {
     down_payment: '50000',
     loan_term_years: '30',
     interest_rate: '0.06',
-    property_tax: '3000',
+    property_tax: '0.012',
     insurance: '1200',
     monthly_rent: '2000',
     hoa: '100',
@@ -23,13 +21,58 @@ const Dashboard = ({ user }) => {
     rehab_rating: '',
     crime_rating: '',
     population_growth: '',
-    contacted: 'no'
+    contacted: 'no',
+    notes: ''
   });
 
+  const [userInput, setUserInput] = useState({});
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [scenarios, setScenarios] = useState([]);
   const [location, setLocation] = useState('san_diego');
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+    setUserInput({ ...userInput, [name]: true });
+  };
+
+  const inputClass = (field) =>
+    `w-full p-2 bg-[#1C1F26] border border-[#2D2F36] rounded-lg ${
+      userInput[field] ? 'text-white' : 'text-gray-400'
+    }`;
+
+  const handleCalculate = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('https://u0hewg9v3a.execute-api.us-east-2.amazonaws.com/calculate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          ...form,
+          purchase_price: parseFloat(form.purchase_price),
+          down_payment: parseFloat(form.down_payment),
+          loan_term_years: parseInt(form.loan_term_years),
+          interest_rate: parseFloat(form.interest_rate),
+          property_tax: parseFloat(form.property_tax),
+          insurance: parseFloat(form.insurance),
+          monthly_rent: parseFloat(form.monthly_rent),
+          hoa: parseFloat(form.hoa || 0),
+          vacancy_rate: parseFloat(form.vacancy_rate || 0),
+          repairs: parseFloat(form.repairs || 0),
+          location: form.location.toLowerCase()
+        })
+      });
+      const data = await res.json();
+      setResult(data);
+    } catch (err) {
+      console.error('❌ Calculation failed:', err);
+      alert('Error calculating scenario.');
+    }
+    setLoading(false);
+  };
 
   const fetchScenarios = async () => {
     try {
@@ -48,8 +91,6 @@ const Dashboard = ({ user }) => {
       );
 
       const items = await res.json();
-      console.log('📦 Raw scenario items:', items);
-
       const cleaned = items.map((item) => {
         const scenarioId = item.scenarioId;
         const inputs = item.inputs || {};
@@ -61,9 +102,7 @@ const Dashboard = ({ user }) => {
           dateAdded: item.timestamp ? new Date(item.timestamp).toLocaleDateString() : '—',
           cashFlow: parseFloat(outputs.monthly_cash_flow ?? item.monthly_cash_flow),
           roi: parseFloat(outputs.roi ?? item.roi) * 100,
-          breakEven: item.outputs?.break_even_months
-            ? parseFloat(item.outputs.break_even_months) / 12
-            : null,
+          breakEven: outputs.break_even_months ? parseFloat(outputs.break_even_months) / 12 : null,
           purchase_price: parseFloat(inputs.purchase_price ?? item.purchase_price),
           down_payment: parseFloat(inputs.down_payment ?? item.down_payment),
           loan_term_years: parseInt(inputs.loan_term_years ?? item.loan_term_years),
@@ -83,7 +122,6 @@ const Dashboard = ({ user }) => {
         };
       });
 
-      console.log('✅ Cleaned scenarios:', cleaned);
       setScenarios(cleaned);
     } catch (err) {
       console.error('❌ Error loading scenarios:', err);
@@ -105,20 +143,76 @@ const Dashboard = ({ user }) => {
       </div>
 
       <div className="bg-[#1C1F26] border border-[#2D2F36] rounded-xl p-6 shadow-md">
-        <CalculatorForm
-          form={form}
-          setForm={setForm}
-          setResult={setResult}
-          loading={loading}
-          setLoading={setLoading}
-        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {[
+            ['Location', 'location', 'select', ['cleveland', 'jacksonville', 'san_antonio', 'san_diego']],
+            ['Zillow Link', 'zillow_link'],
+            ['Zip Code', 'zip_code'],
+            ['Purchase Price', 'purchase_price', 'number'],
+            ['Down Payment', 'down_payment', 'number'],
+            ['Loan Term (Years)', 'loan_term_years', 'number'],
+            ['Interest Rate', 'interest_rate', 'number'],
+            ['Property Tax Rate', 'property_tax', 'number'],
+            ['Insurance', 'insurance', 'number'],
+            ['Monthly Rent', 'monthly_rent', 'number'],
+            ['HOA', 'hoa', 'number'],
+            ['Vacancy Rate', 'vacancy_rate', 'number'],
+            ['Repairs', 'repairs', 'number'],
+            ['Rehab Rating', 'rehab_rating', 'select', ['', 'A', 'B', 'C', 'D', 'F']],
+            ['Crime Rating', 'crime_rating', 'select', ['', 'A', 'B', 'C', 'D', 'F']],
+            ['Population Growth %', 'population_growth', 'number'],
+            ['Contacted', 'contacted', 'select', ['no', 'yes']]
+          ].map(([label, name, type = 'text', options]) => (
+            <div key={name}>
+              <label className="block text-sm text-[#94A3B8] mb-1">{label}</label>
+              {type === 'select' ? (
+                <select
+                  name={name}
+                  value={form[name]}
+                  onChange={handleChange}
+                  className={inputClass(name)}
+                >
+                  {options.map((opt) => (
+                    <option key={opt} value={opt}>{opt.charAt(0).toUpperCase() + opt.slice(1).replace('_', ' ')}</option>
+                  ))}
+                </select>
+              ) : (
+                <input
+                  type={type}
+                  name={name}
+                  value={form[name]}
+                  onChange={handleChange}
+                  className={inputClass(name)}
+                />
+              )}
+            </div>
+          ))}
+
+          <div className="md:col-span-2">
+            <label className="block text-sm text-[#94A3B8] mb-1">Notes</label>
+            <textarea
+              name="notes"
+              value={form.notes}
+              onChange={handleChange}
+              rows={3}
+              className={inputClass('notes')}
+              placeholder="Additional observations or reminders about this property..."
+            />
+          </div>
+        </div>
+        <button
+          onClick={handleCalculate}
+          className="mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-xl"
+        >
+          {loading ? 'Calculating...' : 'Calculate'}
+        </button>
       </div>
 
       {result && (
-        <div className="bg-[#1C1F26] border border-[#2D2F36] rounded-xl p-6 shadow-md">
-          <ResultCard result={result} form={form} />
-        </div>
-      )}
+  <div className="bg-[#1C1F26] border border-[#2D2F36] rounded-xl p-6 shadow-md">
+    <ResultCard result={result} form={form} setScenarios={setScenarios} />
+  </div>
+)}
 
       <div className="bg-[#1C1F26] border border-[#2D2F36] rounded-xl p-6 shadow-md">
         <ScenarioTable

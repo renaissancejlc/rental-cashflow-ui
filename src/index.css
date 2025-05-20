@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Tailwind-safe background texture class */
+.bg-texture {
+  background-color: #0b0c10;
+  background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+  background-repeat: repeat;
+  background-size: auto;
+  background-attachment: fixed;
+}

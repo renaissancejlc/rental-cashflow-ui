@@ -91,8 +91,9 @@ const ScenarioTable = ({ scenarios, location, setLocation, setScenarios }) => {
 
   return (
     <div className="mt-10">
-      <h3 className="text-xl font-semibold mb-2">Saved Scenarios for: {location}</h3>
-      <select
+<h3 className="text-xl font-semibold mb-2">
+  Saved Scenarios for: {location.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())}
+</h3>      <select
         value={location}
         onChange={(e) => setLocation(e.target.value)}
         className="mb-4 p-2 bg-[#1C1F26] border border-[#2D2F36] rounded-lg text-white"
