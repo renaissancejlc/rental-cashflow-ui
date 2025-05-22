@@ -53,7 +53,7 @@ const PoweredBy = () => {
         </p>
         <p>
           <BarChart3 className="inline-block w-4 h-4 text-blue-400 mr-2" />
-          <strong>Recharts (planned):</strong> Future analytics dashboards will use React-powered graphs for rental performance visualization.
+          <strong>Recharts:</strong> Future analytics dashboards will use React-powered graphs for rental performance visualization.
         </p>
       </Card>
 
