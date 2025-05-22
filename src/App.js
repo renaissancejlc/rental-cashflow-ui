@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Amplify } from 'aws-amplify';
 import awsconfig from './aws-exports';
 import { Authenticator, ThemeProvider, defaultTheme } from '@aws-amplify/ui-react';
@@ -7,7 +7,8 @@ import Dashboard from './components/Dashboard';
 import Landing from './components/Landing';
 import PoweredBy from './components/PoweredBy';
 import Resources from './components/Resources';
-import Trends from './components/Trends'; // 👈 NEW IMPORT
+import Trends from './components/Trends'; 
+import { Toaster, toast } from 'sonner';
 
 // Customize the default theme
 const customTheme = {
@@ -66,7 +67,13 @@ const customTheme = {
 Amplify.configure(awsconfig);
 
 function App() {
-  const [activeTab, setActiveTab] = useState('landing');
+  const [activeTab, setActiveTab] = useState(() => localStorage.getItem('activeTab') || 'landing');
+
+  // Sync tab state to localStorage on change
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    localStorage.setItem('activeTab', tab);
+  };
 
   return (
     <ThemeProvider theme={customTheme}>
@@ -77,7 +84,7 @@ function App() {
               {/* App Title and User */}
               <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-2">
                 <h1 className="text-3xl font-bold text-center sm:text-left">
-                  RE CASH FLOW MONITOR
+                  RE MONITOR
                 </h1>
                 <div className="flex items-center gap-4">
                   <span className="text-base sm:text-lg font-semibold">
@@ -97,13 +104,13 @@ function App() {
                 {[
                   ['landing', 'How it Works'],
                   ['dashboard', 'Monitor'],
-                  ['trends', 'Trends'], // 👈 NEW TAB
+                  ['trends', 'Trends'],
                   ['resources', 'Resources'],
                   ['poweredby', 'Powered By'],
                 ].map(([tab, label]) => (
                   <button
                     key={tab}
-                    onClick={() => setActiveTab(tab)}
+                    onClick={() => handleTabChange(tab)}
                     className={`px-4 py-2 rounded-xl font-medium ${
                       activeTab === tab ? 'bg-blue-600 text-white' : 'bg-[#1C1F26] text-[#94A3B8]'
                     }`}
@@ -116,10 +123,11 @@ function App() {
               {/* Tab Content */}
               {activeTab === 'landing' && <Landing />}
               {activeTab === 'dashboard' && <Dashboard user={user} />}
-              {activeTab === 'trends' && <Trends user={user} />} {/* ✅ NEW CONTENT */}
+              {activeTab === 'trends' && <Trends user={user} />}
               {activeTab === 'resources' && <Resources />}
               {activeTab === 'poweredby' && <PoweredBy />}
             </div>
+            <Toaster richColors position="top-right" />
           </div>
         )}
       </Authenticator>

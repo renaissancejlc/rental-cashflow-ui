@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Auth } from 'aws-amplify';
 import ResultCard from './ResultCard';
 import ScenarioTable from './ScenarioTable';
+import { toast } from 'sonner';
 
 const Dashboard = ({ user }) => {
   const [form, setForm] = useState({
@@ -69,7 +70,7 @@ const Dashboard = ({ user }) => {
       setResult(data);
     } catch (err) {
       console.error('❌ Calculation failed:', err);
-      alert('Error calculating scenario.');
+      toast.error('Error calculating scenario.');
     }
     setLoading(false);
   };

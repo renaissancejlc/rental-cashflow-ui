@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Auth } from 'aws-amplify';
 import { Trash2 } from 'lucide-react';
+import { toast } from 'sonner';
 
 const ScenarioTable = ({ scenarios, location, setLocation, setScenarios }) => {
   const [activeScenario, setActiveScenario] = useState(null);
@@ -30,7 +31,7 @@ const ScenarioTable = ({ scenarios, location, setLocation, setScenarios }) => {
       setScenarios((prev) => prev.filter((s) => s.fullId !== fullId));
     } catch (err) {
       console.error('Delete failed:', err);
-      alert('❌ Failed to delete entry.');
+      toast.error('Failed to delete entry.');
     }
   };
 
@@ -38,44 +39,131 @@ const ScenarioTable = ({ scenarios, location, setLocation, setScenarios }) => {
     setEditingScenario((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSave = async () => {
-    try {
-      const user = await Auth.currentAuthenticatedUser();
-      const token = user.signInUserSession.idToken.jwtToken;
+const handleSave = async () => {
+  try {
+    const user = await Auth.currentAuthenticatedUser();
+    const token = user.signInUserSession.idToken.jwtToken;
 
-      const { fullId, notes, contacted, asking_price, zip_code, rehab_rating, crime_rating, population_growth, zillow_link, ...inputs } = editingScenario;
+    const {
+      fullId,
+      notes,
+      contacted,
+      asking_price,
+      zip_code,
+      rehab_rating,
+      crime_rating,
+      population_growth,
+      zillow_link,
+      purchase_price,
+      down_payment,
+      loan_term_years,
+      interest_rate,
+      property_tax,
+      insurance,
+      monthly_rent,
+      hoa,
+      vacancy_rate,
+      repairs,
+    } = editingScenario;
 
-      const res = await fetch(
-        `https://u0hewg9v3a.execute-api.us-east-2.amazonaws.com/updateScenario?scenarioId=${fullId}`,
-        {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: token
+    const res = await fetch(
+      `https://u0hewg9v3a.execute-api.us-east-2.amazonaws.com/updateScenario?scenarioId=${fullId}`,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
+        body: JSON.stringify({
+          inputs: {
+            purchase_price,
+            down_payment,
+            loan_term_years,
+            interest_rate,
+            property_tax,
+            insurance,
+            monthly_rent,
+            hoa,
+            vacancy_rate,
+            repairs,
           },
-          body: JSON.stringify({
-            inputs,
-            notes,
-            contacted,
-            asking_price,
-            zip_code,
-            rehab_rating,
-            crime_rating,
-            population_growth,
-            zillow_link
-          })
-        }
-      );
+          notes,
+          contacted,
+          asking_price,
+          zip_code,
+          rehab_rating,
+          crime_rating,
+          population_growth,
+          zillow_link,
+        }),
+      }
+    );
 
-      if (!res.ok) throw new Error('Failed to update');
+    if (!res.ok) throw new Error('Failed to update');
 
-      alert('✅ Scenario updated successfully.');
-      setActiveScenario(null);
-    } catch (err) {
-      console.error('Update failed:', err);
-      alert('❌ Failed to update scenario.');
-    }
-  };
+    // ⬇️ Recalculate outputs
+    const loanAmount = purchase_price - down_payment;
+    const monthlyRate = interest_rate / 12;
+    const numPayments = loan_term_years * 12;
+    const monthlyMortgage =
+      monthlyRate === 0
+        ? loanAmount / numPayments
+        : loanAmount *
+          (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) /
+          (Math.pow(1 + monthlyRate, numPayments) - 1);
+
+    const monthlyExpenses =
+      monthlyMortgage +
+      insurance / 12 +
+      property_tax / 12 +
+      hoa +
+      repairs +
+      (monthly_rent * vacancy_rate);
+
+    const monthlyCashFlow = monthly_rent - monthlyExpenses;
+    const annualCashFlow = monthlyCashFlow * 12;
+    const roi = annualCashFlow / down_payment;
+    const breakEvenMonths = down_payment / monthlyCashFlow;
+
+    // ⬇️ Update state with outputs included
+    setScenarios((prev) =>
+      prev.map((scenario) =>
+        scenario.fullId === fullId
+          ? {
+              ...scenario,
+              purchase_price,
+              down_payment,
+              loan_term_years,
+              interest_rate,
+              property_tax,
+              insurance,
+              monthly_rent,
+              hoa,
+              vacancy_rate,
+              repairs,
+              asking_price: parseFloat(asking_price),
+              zip_code,
+              rehab_rating,
+              crime_rating,
+              population_growth,
+              zillow_link,
+              notes,
+              contacted,
+              cashFlow: parseFloat(monthlyCashFlow.toFixed(2)),
+              roi: parseFloat((roi * 100).toFixed(2)),
+              breakEven: parseFloat((breakEvenMonths / 12).toFixed(2)),
+            }
+          : scenario
+      )
+    );
+
+    toast.success('Scenario updated successfully.');
+    setActiveScenario(null);
+  } catch (err) {
+    console.error('Update failed:', err);
+    toast.error('Failed to update scenario.');
+  }
+};
 
   const renderInputRow = (label, field, type = 'text') => (
     <div className="flex justify-between text-sm py-1 border-b border-[#2D2F36]">

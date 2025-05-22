@@ -6,7 +6,13 @@ import {
   ShieldCheck,
   Blocks,
   BarChart3,
-  Settings
+  Settings,
+  Youtube,
+  Music,
+  TerminalSquare,
+  BookText,
+  Github,
+  Linkedin
 } from 'lucide-react';
 
 const Icon = ({ src, alt }) => (
@@ -68,10 +74,6 @@ const PoweredBy = () => {
           <Icon src="/icons/aws/Asset-Package_02072025.dee42cd0a6eaacc3da1ad9519579357fb546f803 (1)/Architecture-Service-Icons_02072025/Arch_Security-Identity-Compliance/16/Arch_Amazon-Cognito_16.svg" alt="Cognito" />
           <strong>AWS Cognito:</strong> Identity provider issuing JWT tokens for secure, user-scoped access to backend services.
         </p>
-        <p>
-          <Icon src="/icons/aws/Asset-Package_02072025.dee42cd0a6eaacc3da1ad9519579357fb546f803 (1)/Architecture-Service-Icons_02072025/Arch_Security-Identity-Compliance/16/Arch_AWS-IAM-Identity-Center_16.svg" alt="IAM" />
-          <strong>AWS IAM:</strong> Grants precise, least-privilege access for each Lambda, ensuring functions only touch what they’re supposed to.
-        </p>
       </Card>
 
       <Card title="Hosting & Security" icon={<ShieldCheck className="w-5 h-5 text-blue-500" />}>
@@ -84,10 +86,12 @@ const PoweredBy = () => {
           <strong>Amazon S3:</strong> Stores and serves the React frontend as a static site, accessible via CloudFront.
         </p>
         <p>
-          <strong>CORS (Cross-Origin Resource Sharing):</strong> Properly configured to allow your React frontend to talk to AWS securely.
+          <Icon src="/icons/aws/Asset-Package_02072025.dee42cd0a6eaacc3da1ad9519579357fb546f803 (1)/Architecture-Service-Icons_02072025/Arch_Security-Identity-Compliance/16/Arch_AWS-IAM-Identity-Center_16.svg" alt="IAM" />
+          <strong>AWS IAM:</strong> Grants precise, least-privilege access for each Lambda, ensuring functions only touch what they’re supposed to.
         </p>
-        <p>
-          <strong>IAM Roles & Policies:</strong> All Lambdas run under least-privilege IAM roles that grant access only to permitted DynamoDB tables.
+                <p>
+        <Icon src="/icons/aws/Asset-Package_02072025.dee42cd0a6eaacc3da1ad9519579357fb546f803 (1)/Architecture-Service-Icons_02072025/Arch_Security-Identity-Compliance/16/Arch_AWS-IAM-Identity-Center_16.svg" alt="IAM" />
+          <strong>CORS (Cross-Origin Resource Sharing):</strong> Properly configured to allow your React frontend to talk to AWS securely.
         </p>
       </Card>
 
@@ -99,18 +103,22 @@ const PoweredBy = () => {
         <p className="text-sm mb-3">Connect with me:</p>
         <div className="flex flex-wrap justify-center gap-6 text-sm text-[#CBD5E1]">
           <a href="http://github.com/renaissancejlc" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub" className="w-5 h-5" /> GitHub
+            <Github className="w-5 h-5" /> GitHub
           </a>
           <a href="https://www.linkedin.com/in/renaissancejlc/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" alt="LinkedIn" className="w-5 h-5" /> LinkedIn
+            <Linkedin className="w-5 h-5" /> LinkedIn
           </a>
-          <a href="https://www.youtube.com/@Ren-q1w" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white">
-            <img src="https://www.svgrepo.com/show/349426/youtube.svg" alt="YouTube" className="w-5 h-5" /> YouTube
+          <a href="https://www.youtube.com/@nowbrowncow" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white">
+            <Youtube className="w-5 h-5" /> YouTube
           </a>
-          <a href="#" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white">
-<img src="https://www.svgrepo.com/show/364604/tiktok.svg" alt="TikTok" className="w-5 h-5" /> TikTok          </a>
-          <a href="https://renaissancecarr.com/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white">
-            <img src="https://www.svgrepo.com/show/300940/website.svg" alt="Portfolio" className="w-5 h-5" /> Portfolio
+          <a href="https://www.tiktok.com/@nowbrowncow" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white">
+            <Music className="w-5 h-5" /> TikTok
+          </a>
+          <a href="https://www.tiktok.com/@nowbrowncow" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white">
+            <TerminalSquare className="w-5 h-5" /> Dev Portfolio
+          </a>
+          <a href="https://renaissancecodes.wordpress.com/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white">
+            <BookText className="w-5 h-5" /> Blog
           </a>
         </div>
       </div>

@@ -15,7 +15,7 @@ const Landing = () => {
   return (
     <div className="min-h-screen bg-texture">
       <header className="text-center py-14 px-4">
-        <h1 className="text-4xl font-bold text-white mb-3">RE Cash Flow Monitor</h1>
+        <h1 className="text-4xl font-bold text-white mb-3">Real Estate Metrics Monitor</h1>
         <p className="text-lg text-[#94A3B8] max-w-xl mx-auto">
           Track, analyze, and compare real estate cash flow performance across cities to make smart, ethical investments.
         </p>
@@ -29,15 +29,6 @@ const Landing = () => {
         </ul>
       </Section>
 
-      <Section icon={Settings} title="How to Use">
-        <ol className="list-decimal list-inside space-y-1">
-          <li>Navigate to the “Monitor” tab.</li>
-          <li>Enter financial info to calculate performance.</li>
-          <li>Save results for different zip codes and compare.</li>
-          <li>Switch cities to view trends in your saved data.</li>
-        </ol>
-      </Section>
-
       <Section icon={ShieldCheck} title="Mission & Responsibility">
         <p>
           Being a rental property owner is about more than just owning homes, it’s about shaping neighborhoods and supporting the people who live in them.
@@ -48,6 +39,15 @@ const Landing = () => {
         <p>
           Together, we can set a higher standard for what responsible property ownership looks like.
         </p>
+      </Section>
+
+      <Section icon={Settings} title="How to Use">
+        <ol className="list-decimal list-inside space-y-1">
+          <li>Navigate to the “Monitor” tab.</li>
+          <li>Enter financial info to calculate performance.</li>
+          <li>Save results for different zip codes and compare.</li>
+          <li>Switch cities to view trends in your saved data.</li>
+        </ol>
       </Section>
 
       <Section icon={Rocket} title="Upcoming Features">

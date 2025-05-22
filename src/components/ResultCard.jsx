@@ -1,5 +1,6 @@
 import React from 'react';
 import { Auth } from 'aws-amplify';
+import { toast } from 'sonner';
 
 const ResultCard = ({ result, form, setScenarios }) => {
   const handleSave = async () => {
@@ -41,13 +42,13 @@ const ResultCard = ({ result, form, setScenarios }) => {
           ...form
         };
         setScenarios((prev) => [...prev, newScenario]);
-        alert('✅ Scenario saved!');
+        toast.success('Scenario saved!');
       } else {
-        alert('❌ Save failed.');
+        toast.error('Save failed.');
       }
     } catch (err) {
       console.error('Save error:', err);
-      alert('❌ Save failed.');
+      toast.error('Save failed.');
     }
   };
 
