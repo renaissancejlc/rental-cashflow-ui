@@ -252,6 +252,7 @@ const handleSave = async () => {
             </button>
             <h2 className="text-xl font-semibold mb-4">Scenario Details</h2>
             <div className="space-y-2">
+              {renderInputRow('Zillow Link', 'zillow_link')}
               {renderInputRow('Purchase Price', 'purchase_price', 'number')}
               {renderInputRow('Down Payment', 'down_payment', 'number')}
               {renderInputRow('Loan Term (Years)', 'loan_term_years', 'number')}
