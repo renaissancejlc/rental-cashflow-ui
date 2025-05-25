@@ -195,7 +195,7 @@ const handleSave = async () => {
       <table className="w-full border-collapse">
         <thead>
           <tr className="bg-[#1C1F26] text-left">
-            <th className="p-3 border-b border-[#2D2F36]">Scenario ID</th>
+            <th className="p-3 border-b border-[#2D2F36]">Zillow</th>
             <th className="p-3 border-b border-[#2D2F36]">Monthly Cash Flow</th>
             <th className="p-3 border-b border-[#2D2F36]">ROI (%)</th>
             <th className="p-3 border-b border-[#2D2F36]">Break-Even (Years)</th>
@@ -204,40 +204,53 @@ const handleSave = async () => {
           </tr>
         </thead>
         <tbody>
-          {scenarios.map((s) => (
-            <tr
-              key={s.id}
-              className="hover:bg-[#1E1E26] cursor-pointer"
-              onClick={() => {
-                setActiveScenario(s);
-                setEditingScenario(s);
-              }}
-            >
-              <td className="p-3 border-b border-[#2D2F36]">{s.id}</td>
-              <td className="p-3 border-b border-[#2D2F36]">
-                {s.cashFlow != null ? `$${s.cashFlow.toFixed(2)}` : '—'}
-              </td>
-              <td className="p-3 border-b border-[#2D2F36]">
-                {s.roi != null ? `${s.roi.toFixed(2)}%` : '—'}
-              </td>
-              <td className="p-3 border-b border-[#2D2F36]">
-                {s.breakEven != null ? s.breakEven.toFixed(1) : '—'}
-              </td>
-              <td className="p-3 border-b border-[#2D2F36]">{s.dateAdded}</td>
-              <td className="p-3 border-b border-[#2D2F36]">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleDelete(s.fullId);
-                  }}
-                  className="text-red-400 hover:text-red-600"
-                  title="Delete"
-                >
-                  <Trash2 size={18} />
-                </button>
-              </td>
-            </tr>
-          ))}
+          {[...scenarios]
+            .sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded))
+            .map((s) => (
+              <tr
+                key={s.id}
+                className="hover:bg-[#1E1E26] cursor-pointer"
+                onClick={() => {
+                  setActiveScenario(s);
+                  setEditingScenario(s);
+                }}
+              >
+                <td className="p-3 border-b border-[#2D2F36]">
+                  {s.zillow_link ? (
+                    <a
+                      href={s.zillow_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-400 underline text-sm"
+                    >
+                      Zillow ↗
+                    </a>
+                  ) : '—'}
+                </td>
+                <td className="p-3 border-b border-[#2D2F36]">
+                  {s.cashFlow != null ? `$${s.cashFlow.toFixed(2)}` : '—'}
+                </td>
+                <td className="p-3 border-b border-[#2D2F36]">
+                  {s.roi != null ? `${s.roi.toFixed(2)}%` : '—'}
+                </td>
+                <td className="p-3 border-b border-[#2D2F36]">
+                  {s.breakEven != null ? s.breakEven.toFixed(1) : '—'}
+                </td>
+                <td className="p-3 border-b border-[#2D2F36]">{s.dateAdded}</td>
+                <td className="p-3 border-b border-[#2D2F36]">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDelete(s.fullId);
+                    }}
+                    className="text-red-400 hover:text-red-600"
+                    title="Delete"
+                  >
+                    <Trash2 size={18} />
+                  </button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
 
@@ -253,6 +266,18 @@ const handleSave = async () => {
             <h2 className="text-xl font-semibold mb-4">Scenario Details</h2>
             <div className="space-y-2">
               {renderInputRow('Zillow Link', 'zillow_link')}
+              {editingScenario?.zillow_link && (
+                <div className="text-right mb-2">
+                  <a
+                    href={editingScenario.zillow_link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-400 underline text-sm"
+                  >
+                    View Zillow Listing ↗
+                  </a>
+                </div>
+              )}
               {renderInputRow('Purchase Price', 'purchase_price', 'number')}
               {renderInputRow('Down Payment', 'down_payment', 'number')}
               {renderInputRow('Loan Term (Years)', 'loan_term_years', 'number')}
