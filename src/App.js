@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Amplify } from 'aws-amplify';
 import awsconfig from './aws-exports';
-import { ThemeProvider, defaultTheme } from '@aws-amplify/ui-react';
+import { ThemeProvider, defaultTheme, useAuthenticator, Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import Dashboard from './components/Dashboard';
 import Landing from './components/Landing';
@@ -71,11 +71,20 @@ Amplify.configure(awsconfig);
 function App() {
   const [activeTab, setActiveTab] = useState(() => localStorage.getItem('activeTab') || 'landing');
 
-  // Sync tab state to localStorage on change
   const handleTabChange = (tab) => {
     setActiveTab(tab);
     localStorage.setItem('activeTab', tab);
   };
+
+  return (
+    <Authenticator.Provider>
+      <AppWithAuth activeTab={activeTab} handleTabChange={handleTabChange} />
+    </Authenticator.Provider>
+  );
+}
+
+function AppWithAuth({ activeTab, handleTabChange }) {
+  const { user } = useAuthenticator((context) => [context.user]);
 
   return (
     <Router>
@@ -85,17 +94,21 @@ function App() {
           <ThemeProvider theme={customTheme}>
             <div className="min-h-screen bg-[#0B0C10] text-[#F1F5F9] font-sans">
               <div className="max-w-4xl mx-auto p-6">
-                {/* App Title and Auth Link */}
                 <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-2">
                   <h1 className="text-3xl font-bold text-center sm:text-left">
                     RE MONITOR
                   </h1>
-                  <a href="/authpage" className="text-sm text-blue-400 hover:underline">
-                    Sign In / Sign Up
-                  </a>
+                  {user ? (
+                    <span className="text-sm text-blue-400">
+                      Welcome, {user?.attributes?.nickname || user.username}
+                    </span>
+                  ) : (
+                    <a href="/authpage" className="text-sm text-blue-400 hover:underline">
+                      Sign In / Sign Up
+                    </a>
+                  )}
                 </div>
 
-                {/* Navigation */}
                 <nav className="flex flex-wrap gap-4 mb-8">
                   {[
                     ['landing', 'How it Works'],
@@ -116,7 +129,6 @@ function App() {
                   ))}
                 </nav>
 
-                {/* Tab Content */}
                 {activeTab === 'landing' && <Landing />}
                 {activeTab === 'dashboard' && <Dashboard />}
                 {activeTab === 'trends' && <Trends />}

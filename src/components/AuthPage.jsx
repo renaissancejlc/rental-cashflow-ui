@@ -12,7 +12,16 @@ export default function AuthPage() {
         <h1 className="text-3xl font-bold mb-2 text-center">Welcome to RE Monitor</h1>
         <p className="text-[#94a3b8] text-sm mb-6 text-center">Please sign in or create an account to get started</p>
         <div className="w-full max-w-screen-sm overflow-x-auto sm:overflow-visible">
-          <Authenticator signUpAttributes={['nickname']} />
+          <Authenticator.Provider>
+            <Authenticator loginMechanisms={['email']} signUpAttributes={['nickname']}>
+              {({ signOut, user }) => (
+                <main>
+                  <p className="mb-4">Welcome, {user?.nickname}</p>
+                  <button onClick={signOut} className="text-blue-400 underline">Sign out</button>
+                </main>
+              )}
+            </Authenticator>
+          </Authenticator.Provider>
         </div>
       </div>
     </div>
