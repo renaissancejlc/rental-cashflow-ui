@@ -34,7 +34,25 @@ const Dashboard = ({ user }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
+    let updatedForm = { ...form, [name]: value };
+
+    const price = parseFloat(name === 'purchase_price' ? value : form.purchase_price) || 0;
+    const location = name === 'location' ? value : form.location;
+
+    if (name === 'purchase_price' || name === 'location') {
+      const taxRates = {
+        san_diego: 0.01,
+        jacksonville: 0.0077,
+        san_antonio: 0.027,
+        cleveland: 0.025
+      };
+
+      updatedForm.down_payment = (price * 0.2).toFixed(0);
+      updatedForm.closing_costs = (price * 0.03).toFixed(0);
+      updatedForm.property_tax = (price * (taxRates[location] || 0.01)).toFixed(0);
+    }
+
+    setForm(updatedForm);
     setUserInput({ ...userInput, [name]: true });
   };
 
@@ -151,6 +169,7 @@ const Dashboard = ({ user }) => {
             ['Zip Code', 'zip_code'],
             ['Purchase Price', 'purchase_price', 'number'],
             ['Down Payment', 'down_payment', 'number'],
+            ['Closing Costs', 'closing_costs', 'number'],
             ['Loan Term (Years)', 'loan_term_years', 'number'],
             ['Interest Rate', 'interest_rate', 'number'],
             ['Property Tax Rate', 'property_tax', 'number'],
