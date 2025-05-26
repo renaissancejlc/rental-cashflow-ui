@@ -1,25 +1,20 @@
 import React from 'react';
+import { getPropertyTaxByLocation } from '../utils';
 
 const MonitoringInputs = ({ form, setForm }) => {
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    let updatedForm = { ...form, [name]: value };
+
+    if (name === 'purchase_price') {
+      const price = parseFloat(value) || 0;
+      updatedForm.down_payment = (price * 0.2).toFixed(0);
+      updatedForm.closing_costs = (price * 0.03).toFixed(0);
+    }
+
+    setForm(updatedForm);
   };
 
-  const handleLocationChange = (e) => {
-    const newLocation = e.target.value;
-    const taxRates = {
-      san_diego: 0.01,
-      jacksonville: 0.0098,
-      san_antonio: 0.023,
-      cleveland: 0.025
-    };
-
-    setForm({
-      ...form,
-      location: newLocation,
-      property_tax: (parseFloat(form.purchase_price || 250000) * taxRates[newLocation]).toFixed(0)
-    });
-  };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -28,7 +23,15 @@ const MonitoringInputs = ({ form, setForm }) => {
         <select
           name="location"
           value={form.location}
-          onChange={handleLocationChange}
+          onChange={(e) => {
+            const value = e.target.value;
+            const updatedForm = {
+              ...form,
+              location: value,
+              property_tax: getPropertyTaxByLocation(value, form.purchase_price)
+            };
+            setForm(updatedForm);
+          }}
           className="w-full p-2 bg-[#1C1F26] border border-[#2D2F36] rounded-lg text-white"
         >
           <option value="cleveland">Cleveland</option>
@@ -68,6 +71,16 @@ const MonitoringInputs = ({ form, setForm }) => {
           step="any"
           name="down_payment"
           value={form.down_payment}
+          onChange={handleChange}
+          className="w-full p-2 bg-[#1C1F26] border border-[#2D2F36] rounded-lg text-white"
+        />
+      </div>
+      <div>
+        <label className="block text-sm text-[#94A3B8] mb-1">Closing Costs ($)</label>
+        <input
+          type="number"
+          name="closing_costs"
+          value={form.closing_costs || ''}
           onChange={handleChange}
           className="w-full p-2 bg-[#1C1F26] border border-[#2D2F36] rounded-lg text-white"
         />
