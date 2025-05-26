@@ -75,7 +75,8 @@ const Trends = () => {
     <div className="space-y-12">
       <h2 className="text-3xl font-bold text-white text-center">📊 Market Trends</h2>
       <p className="text-center text-[#94A3B8] max-w-xl mx-auto">
-        These charts show average performance metrics across your saved scenarios by city.
+        View average performance metrics by city based on your saved scenarios.
+        <br />Sign in and save data to start tracking trends.
       </p>
 
       <div className="bg-[#1C1F26] rounded-xl p-6 shadow border border-[#2D2F36]">
