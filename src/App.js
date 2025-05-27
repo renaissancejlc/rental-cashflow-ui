@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Auth } from 'aws-amplify';
 import { Amplify } from 'aws-amplify';
 import awsconfig from './aws-exports';
 import { ThemeProvider, defaultTheme, useAuthenticator, Authenticator } from '@aws-amplify/ui-react';
@@ -99,9 +100,20 @@ function AppWithAuth({ activeTab, handleTabChange }) {
                     RE MONITOR
                   </h1>
                   {user ? (
-                    <span className="text-sm text-blue-400">
-                      Welcome, {user?.attributes?.nickname || user.username}
-                    </span>
+                    <>
+                      <span className="text-sm text-blue-400">
+                        Welcome, {user?.attributes?.nickname || user.username}
+                      </span>
+                      <button
+                        onClick={async () => {
+                          await Auth.signOut();
+                          window.location.href = '/authpage';
+                        }}
+                        className="ml-4 px-3 py-1 text-sm rounded-md bg-[#1C1F26] text-[#94A3B8] hover:bg-[#2D2F36] hover:text-white transition"
+                      >
+                        Sign Out
+                      </button>
+                    </>
                   ) : (
                     <a href="/authpage" className="text-sm text-blue-400 hover:underline">
                       Sign In / Sign Up

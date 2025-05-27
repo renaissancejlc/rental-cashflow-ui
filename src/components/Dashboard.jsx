@@ -121,7 +121,7 @@ const Dashboard = ({ user }) => {
           dateAdded: item.timestamp ? new Date(item.timestamp).toLocaleDateString() : '—',
           cashFlow: parseFloat(outputs.monthly_cash_flow ?? item.monthly_cash_flow),
           roi: parseFloat(outputs.roi ?? item.roi) * 100,
-          breakEven: outputs.break_even_months ? parseFloat(outputs.break_even_months) / 12 : null,
+          breakEven: item.breakEven ? parseFloat(item.breakEven) / 12 : outputs.break_even_months ? parseFloat(outputs.break_even_months) / 12 : null,
           purchase_price: parseFloat(inputs.purchase_price ?? item.purchase_price),
           down_payment: parseFloat(inputs.down_payment ?? item.down_payment),
           loan_term_years: parseInt(inputs.loan_term_years ?? item.loan_term_years),
@@ -137,7 +137,8 @@ const Dashboard = ({ user }) => {
           crime_rating: item.crime_rating ?? '',
           population_growth: item.population_growth ?? '',
           contacted: item.contacted ?? 'no',
-          notes: item.notes ?? ''
+          notes: item.notes ?? '',
+          zillow_link: item.zillow_link ?? item.inputs?.zillow_link ?? ''
         };
       });
 
