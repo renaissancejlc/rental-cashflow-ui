@@ -1,3 +1,5 @@
+Video Demo:
+https://www.youtube.com/watch?v=UlIJ3i6ApSc&ab_channel=Ren
 🏡 Rental Property Cash Flow Monitor
 
 A full-stack web app for analyzing and tracking rental property investment opportunities — built entirely with AWS and React. Users can calculate potential returns, securely save scenarios, and revisit them anytime by location.
