@@ -1,5 +1,6 @@
 // src/components/PoweredBy.jsx
 import React from 'react';
+import Footer from "./Footer";
 import {
   LayoutDashboard,
   BrainCircuit,
@@ -98,30 +99,7 @@ const PoweredBy = () => {
       <div className="bg-[#0B0C10] text-[#94A3B8] italic border-l-4 border-blue-600 pl-4 py-4">
         This app is fully serverless. There are no traditional servers to manage. Everything is on-demand, scalable, and personalized per user — all powered by AWS.
       </div>
-
-      <div className="text-center text-[#94A3B8] border-t pt-6 mt-6">
-        <p className="text-sm mb-3">Connect with me:</p>
-        <div className="flex flex-wrap justify-center gap-6 text-sm text-[#CBD5E1]">
-          <a href="http://github.com/renaissancejlc" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white">
-            <Github className="w-5 h-5" /> GitHub
-          </a>
-          <a href="https://www.linkedin.com/in/renaissancejlc/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white">
-            <Linkedin className="w-5 h-5" /> LinkedIn
-          </a>
-          <a href="https://www.youtube.com/@nowbrowncow" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white">
-            <Youtube className="w-5 h-5" /> YouTube
-          </a>
-          <a href="https://www.tiktok.com/@nowbrowncow" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white">
-            <Music className="w-5 h-5" /> TikTok
-          </a>
-          <a href="https://www.tiktok.com/@nowbrowncow" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white">
-            <TerminalSquare className="w-5 h-5" /> Dev Portfolio
-          </a>
-          <a href="https://renaissancecodes.wordpress.com/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white">
-            <BookText className="w-5 h-5" /> Blog
-          </a>
-        </div>
-      </div>
+    <Footer />
     </div>
   );
 };

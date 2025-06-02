@@ -58,9 +58,8 @@ const Resources = () => {
           </a>
         ))}
       </div>
-      <div className="mt-20">
         <Footer />
-      </div>
+
     </div>
   );
 };

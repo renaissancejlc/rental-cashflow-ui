@@ -114,3 +114,10 @@ aws-exports.js
 
 # MacOS
 .DS_Store
+
+⸻
+
+🆎 ASCII Header
+
+The README header was generated using [patorjk.com ASCII Generator](https://patorjk.com/software/taag/#p=display&h=1&f=ANSI%20Shadow&t=SPECS).  
+Font used: **ANSI Shadow**

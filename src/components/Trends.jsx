@@ -13,6 +13,7 @@ import {
   LineChart,
   Line,
 } from 'recharts';
+import Footer from './Footer';
 
 const Trends = () => {
   const [data, setData] = useState([]);
@@ -234,6 +235,7 @@ const Trends = () => {
           </LineChart>
         </ResponsiveContainer>
       </div>
+      <Footer />
     </div>
   );
 };
