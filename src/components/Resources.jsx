@@ -1,6 +1,7 @@
 // src/components/Resources.jsx
 import React from 'react';
 import { ExternalLink, Building2, FileText, MapPinned, Calculator } from 'lucide-react';
+import Footer from './Footer';
 
 const resources = [
   {
@@ -56,6 +57,9 @@ const Resources = () => {
             <p className="text-[#CBD5E1] text-sm">{resource.description}</p>
           </a>
         ))}
+      </div>
+      <div className="mt-20">
+        <Footer />
       </div>
     </div>
   );

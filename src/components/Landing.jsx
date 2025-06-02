@@ -1,6 +1,7 @@
 // src/components/Landing.jsx
 import React from 'react';
 import { TrendingUp, Settings, ShieldCheck, Rocket } from 'lucide-react';
+import Footer from './Footer';
 
 const Section = ({ icon: Icon, title, children }) => (
   <section className="max-w-3xl mx-auto space-y-4 py-10 px-4 border-b border-[#2D2F36]">
@@ -58,6 +59,7 @@ const Landing = () => {
           <li>Smart alerts for market shifts in your targets</li>
         </ul>
       </Section>
+      <Footer />
     </div>
   );
 };

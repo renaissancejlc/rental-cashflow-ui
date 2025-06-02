@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import Footer from './Footer';
+import { Github, Youtube, Linkedin, Mail, BookOpen } from 'lucide-react';
 import { Auth } from 'aws-amplify';
 import ResultCard from './ResultCard';
 import ScenarioTable from './ScenarioTable';
@@ -243,6 +245,7 @@ const Dashboard = ({ user }) => {
           setLocation={setLocation}
         />
       </div>
+      <Footer />
     </div>
   );
 };
